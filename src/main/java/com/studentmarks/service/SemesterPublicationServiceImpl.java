@@ -30,7 +30,7 @@ public class SemesterPublicationServiceImpl implements SemesterPublicationServic
         boolean hasEligibleStudent = false;
 
         for (Student student : students) {
-            if (student.getCurrentSemester() < semester) {
+            if (student.getCurrentSemester() != semester) {
                 continue;
             }
 

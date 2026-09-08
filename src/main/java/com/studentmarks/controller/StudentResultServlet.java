@@ -53,7 +53,9 @@ public class StudentResultServlet extends HttpServlet {
                         "That semester is not available for your account.");
             }
 
-            if (!semesterPublicationService.isSemesterReleased(semester)) {
+                boolean isPreviousSemester = semester < student.getCurrentSemester();
+                if (!isPreviousSemester
+                    && !semesterPublicationService.isSemesterReleased(semester)) {
                 throw new IllegalStateException(
                         "This semester's result has not been released yet.");
             }

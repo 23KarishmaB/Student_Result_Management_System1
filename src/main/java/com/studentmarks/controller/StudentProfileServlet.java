@@ -8,6 +8,8 @@ import com.studentmarks.service.StudentService;
 import com.studentmarks.service.StudentServiceImpl;
 import com.studentmarks.service.SemesterPublicationService;
 import com.studentmarks.service.SemesterPublicationServiceImpl;
+import com.studentmarks.service.ResultService;
+import com.studentmarks.service.ResultServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,12 +28,14 @@ public class StudentProfileServlet extends HttpServlet {
     private StudentService studentService;
     private DepartmentDAO departmentDAO;
     private SemesterPublicationService semesterPublicationService;
+    private ResultService resultService;
 
     @Override
     public void init() {
         studentService = new StudentServiceImpl();
         departmentDAO = new DepartmentDAOImpl();
         semesterPublicationService = new SemesterPublicationServiceImpl();
+        resultService = new ResultServiceImpl();
     }
 
     @Override
@@ -55,7 +59,20 @@ public class StudentProfileServlet extends HttpServlet {
         for (int semester = 1;
              semester <= student.getCurrentSemester();
              semester++) {
-            if (semesterPublicationService.isSemesterReleased(semester)) {
+            boolean previousResultComplete = false;
+            if (semester < student.getCurrentSemester()) {
+                try {
+                    resultService.getStudentResultByStudentId(studentId, semester);
+                    previousResultComplete = true;
+                } catch (IllegalArgumentException | IllegalStateException ignored) {
+                    // Keep incomplete previous-semester results unavailable.
+                }
+            }
+
+            boolean currentSemesterReleased = semester == student.getCurrentSemester()
+                    && semesterPublicationService.isSemesterReleased(semester);
+
+            if (previousResultComplete || currentSemesterReleased) {
                 releasedSemesters.add(semester);
             }
         }

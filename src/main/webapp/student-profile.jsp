@@ -69,15 +69,17 @@
                 %>
                     <option value="<%= semester %>">
                         Semester <%= semester %>
-                        (<%= released ? "Published" : "Not published" %>)
+                        (<%= released
+                            ? semester == currentSemester ? "Published" : "Available"
+                            : "Not published" %>)
                     </option>
                 <% } %>
             </select>
             <button type="submit">View Result</button>
         </form>
         <p class="muted result-note">
-            Results become available after all eligible students have complete marks
-            for that semester and the semester is released.
+            
+            Note: Results for semesters that have not been published yet will not be available.
         </p>
     </div>
     <a class="logout button" href="<%= request.getContextPath() %>/student-logout">Logout</a>
