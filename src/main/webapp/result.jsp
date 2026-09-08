@@ -4,6 +4,7 @@
 <%@ page import="com.studentmarks.model.Student" %>
 <%@ page import="com.studentmarks.model.Department" %>
 <%@ page import="com.studentmarks.model.Mark" %>
+<%@ page import="java.util.Locale" %>
 
 <!DOCTYPE html>
 <html>
@@ -180,7 +181,7 @@
             </td>
 
             <td>
-                <%= mark.getScore() %>
+                <%= String.format(Locale.US, "%.2f", mark.getScore()) %>
             </td>
 
             <td>
@@ -204,12 +205,13 @@
 
         <p>
             <strong>Total Marks:</strong>
-            <%= result.getTotalMarks() %> / <%= result.getMarks().size() * 100 %>
+            <%= String.format(Locale.US, "%.2f", result.getTotalMarks()) %>
+            / <%= result.getMarks().size() * 100 %>
         </p>
 
         <p>
             <strong>Percentage:</strong>
-            <%= result.getPercentage() %>%
+            <%= String.format(Locale.US, "%.2f", result.getPercentage()) %>%
         </p>
 
         <p>
