@@ -95,8 +95,9 @@
 <h1>Admin Student Management</h1>
 
 
+<div class="page-actions">
 <a class="add-student"
-   href="<%= request.getContextPath() %>/students?action=add">
+    href="<%= request.getContextPath() %>/students?action=add">
 
     Add Student
 
@@ -109,6 +110,8 @@
     Back to Admin Dashboard
 
 </a>
+
+</div>
 
 
 <br>

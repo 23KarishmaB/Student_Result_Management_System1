@@ -121,7 +121,7 @@
 
     <div class="header">
 
-        <h1><span class="site-mark">Student Marks Management</span></h1>
+        <h1><span class="site-mark">Student Result Management</span></h1>
 
         <p>Manage and view student academic results</p>
 
@@ -130,7 +130,7 @@
 
     <div class="container">
 
-        <h2>Academic results, clearly organised.</h2>
+        <!-- <h2>Academic results, clearly organised.</h2> -->
 
         <p class="subtitle">
             Please select your role to continue.
