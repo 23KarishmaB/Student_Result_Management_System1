@@ -221,6 +221,9 @@
 
     <div class="print-actions">
         <button type="button" onclick="window.print()">Print Result</button>
+        <% if (studentId != null) { %>
+            <a class="button" href="<%= request.getContextPath() %>/student-logout">Logout</a>
+        <% } %>
     </div>
 
 

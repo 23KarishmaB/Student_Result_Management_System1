@@ -8,6 +8,7 @@
     List<Integer> releasedSemesters =
             (List<Integer>) request.getAttribute("releasedSemesters");
     String resultMessage = (String) request.getAttribute("resultMessage");
+        int currentSemester = student.getCurrentSemester();
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +17,6 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
     <title>Student Profile</title>
     <style>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
         body { font-family: Arial, sans-serif; margin: 40px; }
         .profile { width: 520px; border: 1px solid #ccc; padding: 20px; }
         .profile p { margin: 14px 0; }
@@ -56,16 +56,29 @@
         <p class="message"><%= resultMessage %></p>
     <% } %>
     <div class="results">
-        <h2>Released Results</h2>
-        <% if (releasedSemesters == null || releasedSemesters.isEmpty()) { %>
-            <p>No semester results have been released yet.</p>
-        <% } else { %>
-            <% for (Integer semester : releasedSemesters) { %>
-                <a href="<%= request.getContextPath() %>/student-result?semester=<%= semester %>">
-                    View Semester <%= semester %> Result
-                </a>
-            <% } %>
-        <% } %>
+        <h2>Semester Results</h2>
+        <p class="muted">Choose a semester up to your current semester.</p>
+        <form class="semester-picker" method="get"
+              action="<%= request.getContextPath() %>/student-result">
+            <label for="semester"><strong>Semester</strong></label>
+            <select id="semester" name="semester" required>
+                <option value="">Select semester</option>
+                <% for (int semester = 1; semester <= currentSemester; semester++) {
+                       boolean released = releasedSemesters != null
+                               && releasedSemesters.contains(semester);
+                %>
+                    <option value="<%= semester %>">
+                        Semester <%= semester %>
+                        (<%= released ? "Published" : "Not published" %>)
+                    </option>
+                <% } %>
+            </select>
+            <button type="submit">View Result</button>
+        </form>
+        <p class="muted result-note">
+            Results become available after all eligible students have complete marks
+            for that semester and the semester is released.
+        </p>
     </div>
     <a class="logout button" href="<%= request.getContextPath() %>/student-logout">Logout</a>
     </div>
