@@ -310,6 +310,18 @@
 
 %>
 
+                        <form method="post"
+                                    action="<%= request.getContextPath() %>/students"
+                                    onsubmit="return confirm('Delete this student and all recorded marks?');">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="studentId" value="<%= student.getStudentId() %>">
+                                <button type="submit">Delete</button>
+                        </form>
+
+<%
+
+%>
+
         </td>
 
     </tr>

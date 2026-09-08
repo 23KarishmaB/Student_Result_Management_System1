@@ -233,6 +233,19 @@ public class StudentServlet extends HttpServlet {
                 return;
             }
 
+                        if ("delete".equals(action)) {
+                                int studentId = Integer.parseInt(
+                                                request.getParameter("studentId"));
+
+                                studentService.deleteStudent(studentId);
+
+                                request.getSession().setAttribute(
+                                                "studentManagementMessage",
+                                                "Student deleted successfully.");
+                                response.sendRedirect(request.getContextPath() + "/students");
+                                return;
+                        }
+
             // =================================================
             // SAVE / UPDATE MARKS
             // =================================================
@@ -415,6 +428,14 @@ public class StudentServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/students");
                 return;
             }
+
+                        if ("delete".equals(action)) {
+                                request.getSession().setAttribute(
+                                                "studentManagementMessage",
+                                                "Unable to delete student: " + e.getMessage());
+                                response.sendRedirect(request.getContextPath() + "/students");
+                                return;
+                        }
 
             if ("saveMarks".equals(action)) {
 
